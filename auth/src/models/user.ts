@@ -25,8 +25,4 @@ const buildUser = (attrs: UserAttrs) => {
   return new User(attrs);
 };
 
-buildUser({
-  email: "test@test.com",
-  password: "password",
-});
-export { User };
+export { User, buildUser };
