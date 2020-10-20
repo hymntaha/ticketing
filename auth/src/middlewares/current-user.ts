@@ -1,5 +1,5 @@
-import { Request, Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
+import { Request, Response, NextFunction } from 'express';
+import jwt from 'jsonwebtoken';
 
 interface UserPayload {
   id: string;
@@ -30,5 +30,6 @@ export const currentUser = (
     ) as UserPayload;
     req.currentUser = payload;
   } catch (err) {}
+
   next();
 };
