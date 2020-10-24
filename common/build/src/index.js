@@ -9,7 +9,7 @@ __export(require("./errors/database-connection-error"));
 __export(require("./errors/not-authorized-error"));
 __export(require("./errors/not-found-error"));
 __export(require("./errors/request-validation-error"));
-// Middleware
+// Middleware section...
 __export(require("./middlewares/current-user"));
 __export(require("./middlewares/error-handler"));
 __export(require("./middlewares/require-auth"));
