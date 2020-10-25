@@ -7,7 +7,7 @@ import jwt from "jsonwebtoken";
 declare global {
   namespace NodeJS {
     interface Global {
-      signin(): Promise<string[]>;
+      signin(): string[];
     }
   }
 }
@@ -39,7 +39,7 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
-global.signin = async () => {
+global.signin = () => {
   // Build a JWT payload. {id, email}
   const payload = {
     id: "dfsdsgsgsdg",
@@ -55,5 +55,5 @@ global.signin = async () => {
   // Take JSON and encode  it as base64
   const base64 = Buffer.from(sessionJSON).toString("base64");
   // return a string thats the cookie with the encoded data
-  return `express:sess=${base64}`;
+  return [`express:sess=${base64}`];
 };
