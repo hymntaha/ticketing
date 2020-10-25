@@ -1,4 +1,5 @@
 import express, { Request, Response } from "express";
+import {requireAuth} from '@sgtickets/common';
 
 const router = express.Router();
 
