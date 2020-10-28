@@ -38,14 +38,19 @@ it("returns an error if an invalid price is provided", async () => {
     .set("Cookie", global.signin())
     .send({ title: "avsafdsf", price: -10 })
     .expect(400);
+
+  await request(app)
+    .post("/api/tickets")
+    .set("Cookie", global.signin())
+    .send({ title: "fsdgsdgg" })
+    .expect(400);
 });
 
-await request(app)
-  .post("/api/tickets")
-  .set("Cookie", global.signin())
-  .send({ title: "fsdgsdgg" })
-  .expect(400);
-
 it("creates a ticket with valid inputs", async () => {
+  // add in a check to make sure a ticket was saved
 
+  await request(app)
+      .post("/api/tickets")
+      .send({title: "fsdgsdgg", price: 20})
+      .expect(201);
 });
