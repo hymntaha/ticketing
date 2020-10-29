@@ -1,23 +1,23 @@
-import express, { Request, Response } from 'express';
-import { body } from 'express-validator';
-import nats from 'node-nats-streaming';
-import { requireAuth, validateRequest } from '@sgtickets/common';
-import { Ticket } from '../models/ticket';
+import express, { Request, Response } from "express";
+import { body } from "express-validator";
+import nats from "node-nats-streaming";
+import { requireAuth, validateRequest } from "@tutickets/common";
+import { Ticket } from "../models/ticket";
 
 const router = express.Router();
 
-const stan = nats.connect('ticketing', 'tickets', {
-  url: 'http://nats-srv:4222',
+const stan = nats.connect("ticketing", "tickets", {
+  url: "http://nats-srv:4222",
 });
 
 router.post(
-  '/api/tickets',
+  "/api/tickets",
   requireAuth,
   [
-    body('title').not().isEmpty().withMessage('Title is required'),
-    body('price')
+    body("title").not().isEmpty().withMessage("Title is required"),
+    body("price")
       .isFloat({ gt: 0 })
-      .withMessage('Price must be greater than 0'),
+      .withMessage("Price must be greater than 0"),
   ],
   validateRequest,
   async (req: Request, res: Response) => {
@@ -31,11 +31,11 @@ router.post(
     await ticket.save();
 
     const event = {
-      type: 'ticket:created',
+      type: "ticket:created",
       data: ticket,
     };
-    stan.publish('ticket:created', JSON.stringify(event), () => {
-      console.log('Ticket creation event published');
+    stan.publish("ticket:created", JSON.stringify(event), () => {
+      console.log("Ticket creation event published");
     });
 
     res.status(201).send(ticket);
