@@ -24,5 +24,7 @@ stan.on("connect", () => {
     if (typeof data === "string") {
       console.log(`Received event #${msg.getSequence()}, with data: ${data}`);
     }
+
+    msg.ack();
   });
 });
