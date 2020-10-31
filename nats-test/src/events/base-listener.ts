@@ -1,5 +1,4 @@
 import { Message, Stan } from "node-nats-streaming";
-import exp from "constants";
 
 export abstract class Listener {
   abstract subject: string;
@@ -20,6 +19,7 @@ export abstract class Listener {
       .setAckWait(this.ackWait)
       .setDurableName(this.queueGroupName);
   }
+
   listen() {
     const subscription = this.client.subscribe(
       this.subject,
@@ -28,11 +28,11 @@ export abstract class Listener {
     );
 
     subscription.on("message", (msg: Message) => {
-      console.log(`Message received: ${this.subject}/${this.queueGroupName}`);
-    });
+      console.log(`Message received: ${this.subject} / ${this.queueGroupName}`);
 
-    const parsedData = this.parseMessage(msg);
-    this.onMessage(parsedData, msg);
+      const parsedData = this.parseMessage(msg);
+      this.onMessage(parsedData, msg);
+    });
   }
 
   parseMessage(msg: Message) {
